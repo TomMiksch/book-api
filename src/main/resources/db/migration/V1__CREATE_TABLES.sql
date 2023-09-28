@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS BOOKS CASCADE;
+
+CREATE TABLE BOOKS
+(
+    ID        BIGINT NOT NULL,
+    TITLE     VARCHAR2(50),
+    AUTHOR    VARCHAR2(50),
+    PUBLISHER VARCHAR2(50),
+    PRIMARY KEY (ID)
+);
+
+INSERT INTO BOOKS(ID, TITLE, AUTHOR, PUBLISHER) VALUES (1, 'The Godfather', 'Mario Puzo', 'Penguin');
+INSERT INTO BOOKS(ID, TITLE, AUTHOR, PUBLISHER) VALUES (2, 'Twelve Mighty Orphans', 'Jim Dent', 'Random House');
+INSERT INTO BOOKS(ID, TITLE, AUTHOR, PUBLISHER) VALUES (3, 'Daisy Jones and the Six', 'Taylor Jenkins Reid', 'Simon & Schuster');
