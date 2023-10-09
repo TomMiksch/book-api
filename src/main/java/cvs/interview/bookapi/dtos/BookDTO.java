@@ -5,7 +5,11 @@ import lombok.*;
 @Setter
 @Getter
 @NoArgsConstructor
-//@AllArgsConstructor
+@AllArgsConstructor
 @Builder
 public class BookDTO {
+    Long id;
+    String title;
+    String author;
+    String publisher;
 }
