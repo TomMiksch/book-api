@@ -1,4 +1,4 @@
 package cvs.interview.bookapi.repositories;
 
-public class BookRepository {
+public interface BookRepository {
 }
