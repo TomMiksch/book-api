@@ -12,4 +12,6 @@ public class BookDTO {
     String title;
     String author;
     String publisher;
+    Boolean stillHave;
+    String location;
 }

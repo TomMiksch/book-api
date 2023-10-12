@@ -18,4 +18,6 @@ public class BookEntity {
     String title;
     String author;
     String publisher;
+    Boolean stillHave;
+    String location;
 }

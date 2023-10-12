@@ -10,8 +10,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Arrays.asList;
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
@@ -65,5 +68,47 @@ class BookServiceTest {
         List<BookDTO> actual = bookService.getAllBooks();
 
         assertThat(actual).usingRecursiveComparison().isEqualTo(expectedDTOs);
+    }
+
+    @Test
+    @DisplayName("Get Book By Id")
+    public void getById() {
+        Long id = 1L;
+
+        BookEntity responseEntity = BookEntity.builder()
+            .id(id)
+            .title("Book")
+            .author("Author")
+            .publisher("publisher")
+            .stillHave(true)
+            .location("Home")
+            .build();
+
+        BookDTO expected = BookDTO.builder()
+            .id(1L)
+            .title("Book")
+            .author("Author")
+            .publisher("publisher")
+            .stillHave(true)
+            .location("Home")
+            .build();
+
+        when(bookRepository.findById(id)).thenReturn(of(responseEntity));
+
+        BookDTO actual = bookService.getById(id);
+
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("Get Book By Id returns null")
+    public void getByIdReturnsNull() {
+        Long id = 1L;
+
+        when(bookRepository.findById(id)).thenReturn(empty());
+
+        BookDTO actual = bookService.getById(id);
+
+        assertThat(actual).isEqualTo(null);
     }
 }

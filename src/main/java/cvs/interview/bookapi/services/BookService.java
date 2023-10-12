@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookService {
@@ -24,12 +25,19 @@ public class BookService {
         return response;
     }
 
+    public BookDTO getById(Long id) {
+        Optional<BookEntity> optById = bookRepository.findById(id);
+        return optById.map(BookService::entityToDTO).orElse(null);
+    }
+
     private static BookDTO entityToDTO(BookEntity entity) {
         return BookDTO.builder()
             .id(entity.getId())
             .author(entity.getAuthor())
             .title(entity.getTitle())
             .publisher(entity.getPublisher())
+            .stillHave(entity.getStillHave())
+            .location(entity.getLocation())
             .build();
     }
 }
