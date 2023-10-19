@@ -24,8 +24,14 @@ public class BookController {
         return new ResponseEntity<>(bookService.getAllBooks(), OK);
     }
 
-   @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<BookDTO> getById(@PathVariable Long id) {
         return new ResponseEntity<>(bookService.getById(id), OK);
+    }
+
+    //    TODO save endpoint
+    @PostMapping("/save")
+    public ResponseEntity<BookDTO> saveBook(@RequestBody BookDTO bookDTO) {
+        return new ResponseEntity<>(bookService.saveBook(bookDTO), OK);
     }
 }

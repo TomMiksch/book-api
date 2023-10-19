@@ -1,13 +1,17 @@
 package cvs.interview.bookapi.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import cvs.interview.bookapi.dtos.BookDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -17,6 +21,8 @@ class BookControllerIntegrationTest {
 
     @Autowired
     MockMvc mockMvc;
+
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Test
     @DisplayName("Get all books")
@@ -52,6 +58,30 @@ class BookControllerIntegrationTest {
             .andExpect(jsonPath("$.title").value("The Godfather"))
             .andExpect(jsonPath("$.author").value("Mario Puzo"))
             .andExpect(jsonPath("$.publisher").value("Penguin"))
+            .andExpect(jsonPath("$.stillHave").value("true"))
+            .andExpect(jsonPath("$.location").value("Home"));
+    }
+
+    @Test
+    @DisplayName("Save a new book")
+    public void saveBookNoId() throws Exception {
+        BookDTO book = BookDTO.builder()
+            .id(null)
+            .title("New Book")
+            .author("Me")
+            .publisher("Sure")
+            .location("Home")
+            .stillHave(true)
+            .build();
+
+        mockMvc.perform(post("/book/save")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(book)))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id").isNumber())
+            .andExpect(jsonPath("$.title").value("New Book"))
+            .andExpect(jsonPath("$.author").value("Me"))
+            .andExpect(jsonPath("$.publisher").value("Sure"))
             .andExpect(jsonPath("$.stillHave").value("true"))
             .andExpect(jsonPath("$.location").value("Home"));
     }

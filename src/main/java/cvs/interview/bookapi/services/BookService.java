@@ -30,6 +30,11 @@ public class BookService {
         return optById.map(BookService::entityToDTO).orElse(null);
     }
 
+    public BookDTO saveBook(BookDTO bookDTO) {
+//        TODO figure out what's wrong with this dumbass line of code
+        return entityToDTO(bookRepository.save(dtoToEntity(bookDTO)));
+    }
+
     private static BookDTO entityToDTO(BookEntity entity) {
         return BookDTO.builder()
             .id(entity.getId())
@@ -38,6 +43,17 @@ public class BookService {
             .publisher(entity.getPublisher())
             .stillHave(entity.getStillHave())
             .location(entity.getLocation())
+            .build();
+    }
+
+    private static BookEntity dtoToEntity(BookDTO dto) {
+        return BookEntity.builder()
+            .id(dto.getId())
+            .author(dto.getAuthor())
+            .title(dto.getTitle())
+            .publisher(dto.getPublisher())
+            .stillHave(dto.getStillHave())
+            .location(dto.getLocation())
             .build();
     }
 }

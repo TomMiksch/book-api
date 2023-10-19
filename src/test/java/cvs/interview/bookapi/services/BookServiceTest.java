@@ -16,6 +16,7 @@ import static java.util.Arrays.asList;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
@@ -110,5 +111,51 @@ class BookServiceTest {
         BookDTO actual = bookService.getById(id);
 
         assertThat(actual).isEqualTo(null);
+    }
+
+    @Test
+    @DisplayName("Save a book, no ID")
+    public void saveBookNoId() {
+        BookDTO input = BookDTO.builder()
+            .id(null)
+            .title("Book")
+            .author("Author")
+            .publisher("publisher")
+            .stillHave(true)
+            .location("Home")
+            .build();
+
+        BookDTO expected = BookDTO.builder()
+            .id(1L)
+            .title("Book")
+            .author("Author")
+            .publisher("publisher")
+            .stillHave(true)
+            .location("Home")
+            .build();
+
+        BookEntity saveEntity = BookEntity.builder()
+            .id(null)
+            .title("Book")
+            .author("Author")
+            .publisher("publisher")
+            .stillHave(true)
+            .location("Home")
+            .build();
+
+        BookEntity responseEntity = BookEntity.builder()
+            .id(1L)
+            .title("Book")
+            .author("Author")
+            .publisher("publisher")
+            .stillHave(true)
+            .location("Home")
+            .build();
+
+        when(bookRepository.save(eq(saveEntity))).thenReturn(responseEntity);
+
+        BookDTO actual = bookService.saveBook(input);
+
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }
 }
