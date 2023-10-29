@@ -1,8 +1,6 @@
 package cvs.interview.bookapi.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -14,6 +12,7 @@ import lombok.*;
 @Table(name = "BOOKS")
 public class BookEntity {
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     Long id;
     String title;
     String author;

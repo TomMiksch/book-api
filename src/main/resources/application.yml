@@ -1,11 +1,15 @@
 spring:
+  sql:
+    init:
+      mode: always
   jpa:
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+    defer-datasource-initialization: true
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:file:./data/demo
     username: sa
     password: sa
     driver-class-name: org.h2.Driver
@@ -21,14 +25,25 @@ logging:
 
 server:
   port: 8080
+  address: 192.168.1.35
+  ssl:
+    key-store: classpath:springboot.p12
+    key-store-password: password
+    key-store-type: pkcs12
+    key-alias: springboot
+    key-password: password
 
 management:
+  server:
+    ssl:
+      enabled: false
   endpoints:
     web:
       exposure:
         include: '*'
       cors:
         allowed-origins: '*'
+        allowed-methods: '*'
   endpoint:
     health:
       show-details: always

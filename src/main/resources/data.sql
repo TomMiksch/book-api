@@ -1,0 +1,19 @@
+--DROP TABLE IF EXISTS BOOKS CASCADE;
+
+CREATE TABLE IF NOT EXISTS BOOKS
+(
+    ID         BIGINT auto_increment PRIMARY KEY,
+    TITLE      VARCHAR2(255),
+    AUTHOR     VARCHAR2(255),
+    PUBLISHER  VARCHAR2(255),
+    STILL_HAVE BOOLEAN,
+    LOCATION   VARCHAR2(255),
+    PRIMARY KEY (ID)
+);
+
+--INSERT INTO BOOKS(TITLE, AUTHOR, PUBLISHER, STILL_HAVE, LOCATION)
+--VALUES ('The Godfather', 'Mario Puzo', 'Penguin', TRUE, 'Home');
+--INSERT INTO BOOKS(TITLE, AUTHOR, PUBLISHER, STILL_HAVE, LOCATION)
+--VALUES ('Twelve Mighty Orphans', 'Jim Dent', 'Random House', FALSE, 'Sold');
+--INSERT INTO BOOKS(TITLE, AUTHOR, PUBLISHER, STILL_HAVE, LOCATION)
+--VALUES ('Daisy Jones and the Six', 'Taylor Jenkins Reid', 'Simon & Schuster', FALSE, 'Lent to Phil');
